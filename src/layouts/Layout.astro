@@ -1,0 +1,24 @@
+---
+import "../styles/global.css";
+import "maplibre-gl/dist/maplibre-gl.css";
+
+interface Props {
+  title?: string;
+}
+const { title = "Building Codes Map" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Interactive map of building codes by jurisdiction. v1: United Kingdom." />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f766e'/%3E%3Cpath d='M16 44 V24 l16 -10 16 10 V44 Z M28 44 V32 h8 V44' fill='none' stroke='white' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

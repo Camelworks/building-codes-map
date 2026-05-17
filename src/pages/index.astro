@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Map from '../components/Map.astro';
+import Sidebar from '../components/Sidebar.astro';
+import AddressSearch from '../components/AddressSearch.astro';
+import ChatStub from '../components/ChatStub.astro';
+---
+
+<Layout title="Building Codes Map — UK">
+  <div id="app">
+    <header class="relative z-10 flex items-center justify-between gap-4 px-4 py-3">
+      <div class="flex items-center gap-3">
+        <div class="grid h-9 w-9 place-items-center rounded-xl bg-teal-700 text-white">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V11l7-5 7 5v10M10 21v-6h4v6"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold leading-tight text-slate-900">Building Codes Map</p>
+          <p class="text-[11px] leading-tight text-slate-500">v0.1 — United Kingdom</p>
+        </div>
+      </div>
+
+      <div class="relative">
+        <AddressSearch />
+      </div>
+
+      <a href="https://github.com/Camelworks/building-codes-map" target="_blank" rel="noopener" class="hidden text-xs font-medium text-slate-500 hover:text-teal-700 sm:inline">
+        github.com/Camelworks/building-codes-map ↗
+      </a>
+    </header>
+
+    <main class="relative">
+      <Map />
+      <Sidebar />
+      <ChatStub />
+    </main>
+  </div>
+</Layout>

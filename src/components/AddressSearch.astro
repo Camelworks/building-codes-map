@@ -1,0 +1,130 @@
+---
+// Address search bar. Calls Nominatim (OSM) — no API key required.
+// Emits a `bcm:locate` CustomEvent on window with { lat, lon, displayName, boundingBox }.
+---
+
+<form id="bcm-search" class="glass flex items-center gap-2 rounded-full px-3 py-2 shadow-sm" role="search" autocomplete="off">
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
+    <circle cx="11" cy="11" r="7" />
+    <path d="m20 20-3.5-3.5" />
+  </svg>
+  <input
+    id="bcm-search-input"
+    type="search"
+    placeholder="Search an address — e.g. 10 Downing St, London"
+    class="w-[420px] max-w-[60vw] bg-transparent text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none"
+    aria-label="Search address"
+  />
+  <button id="bcm-search-clear" type="button" class="hidden text-slate-400 hover:text-slate-700" aria-label="Clear">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+</form>
+
+<div id="bcm-search-results" class="glass absolute left-0 top-[52px] hidden w-[460px] max-w-[60vw] overflow-hidden rounded-2xl shadow-lg"></div>
+
+<script>
+  const form = document.getElementById('bcm-search') as HTMLFormElement;
+  const input = document.getElementById('bcm-search-input') as HTMLInputElement;
+  const clear = document.getElementById('bcm-search-clear') as HTMLButtonElement;
+  const results = document.getElementById('bcm-search-results') as HTMLDivElement;
+
+  let debounceTimer: number | undefined;
+  let lastQuery = '';
+
+  function showResults(items: any[]) {
+    if (!items.length) {
+      results.innerHTML = `<div class="p-4 text-sm text-slate-500">No results.</div>`;
+      results.classList.remove('hidden');
+      return;
+    }
+    results.innerHTML = items
+      .slice(0, 6)
+      .map(
+        (r, i) => `
+        <button data-idx="${i}" class="block w-full border-b border-slate-100 px-4 py-2 text-left text-sm hover:bg-slate-50 last:border-b-0">
+          <span class="font-medium text-slate-800">${escape(r.display_name.split(',')[0])}</span>
+          <span class="block truncate text-xs text-slate-500">${escape(r.display_name)}</span>
+        </button>`
+      )
+      .join('');
+    results.classList.remove('hidden');
+    results.querySelectorAll('button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const r = items[Number((btn as HTMLButtonElement).dataset.idx)];
+        pick(r);
+      });
+    });
+  }
+
+  function escape(s: string) {
+    return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+  }
+
+  function pick(r: any) {
+    results.classList.add('hidden');
+    input.value = r.display_name;
+    window.dispatchEvent(
+      new CustomEvent('bcm:locate', {
+        detail: {
+          lat: parseFloat(r.lat),
+          lon: parseFloat(r.lon),
+          displayName: r.display_name,
+          boundingBox: r.boundingbox?.map(parseFloat),
+        },
+      })
+    );
+  }
+
+  async function search(q: string) {
+    if (q === lastQuery) return;
+    lastQuery = q;
+    if (q.length < 3) {
+      results.classList.add('hidden');
+      return;
+    }
+    try {
+      const url = new URL('https://nominatim.openstreetmap.org/search');
+      url.searchParams.set('q', q);
+      url.searchParams.set('format', 'json');
+      url.searchParams.set('addressdetails', '1');
+      url.searchParams.set('limit', '6');
+      url.searchParams.set('countrycodes', 'gb');
+      const res = await fetch(url.toString(), {
+        headers: { 'Accept-Language': navigator.language || 'en' },
+      });
+      if (!res.ok) throw new Error(`Nominatim ${res.status}`);
+      const data = await res.json();
+      showResults(data);
+    } catch (err) {
+      results.innerHTML = `<div class="p-4 text-sm text-red-600">Search failed: ${(err as Error).message}</div>`;
+      results.classList.remove('hidden');
+    }
+  }
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    clear.classList.toggle('hidden', q.length === 0);
+    window.clearTimeout(debounceTimer);
+    debounceTimer = window.setTimeout(() => search(q), 350);
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    search(input.value.trim());
+  });
+
+  clear.addEventListener('click', () => {
+    input.value = '';
+    results.classList.add('hidden');
+    clear.classList.add('hidden');
+    input.focus();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!form.contains(e.target as Node) && !results.contains(e.target as Node)) {
+      results.classList.add('hidden');
+    }
+  });
+</script>

@@ -1,0 +1,88 @@
+{
+  "$schema": "v1-link-out",
+  "lastUpdated": "2026-05-17",
+  "notes": "Link-out only. All URLs point to official government sources. Documents themselves remain on .gov.uk / .gov.scot / .gov.wales / .finance-ni.gov.uk.",
+  "regions": {
+    "E92000001": {
+      "name": "England",
+      "regulator": "Building Regulations 2010 (England)",
+      "authority": "Ministry of Housing, Communities & Local Government (gov.uk)",
+      "indexUrl": "https://www.gov.uk/government/collections/approved-documents",
+      "licence": "Open Government Licence v3.0",
+      "documents": [
+        { "code": "A",  "title": "Structure", "url": "https://www.gov.uk/government/publications/structure-approved-document-a", "summary": "Loadings, ground movement, disproportionate collapse." },
+        { "code": "B1", "title": "Fire safety — Vol 1: Dwellings", "url": "https://www.gov.uk/government/publications/fire-safety-approved-document-b", "summary": "Means of escape, fire spread, structural protection in homes." },
+        { "code": "B2", "title": "Fire safety — Vol 2: Buildings other than dwellings", "url": "https://www.gov.uk/government/publications/fire-safety-approved-document-b", "summary": "Non-residential fire safety provisions." },
+        { "code": "C",  "title": "Site preparation and resistance to contaminants and moisture", "url": "https://www.gov.uk/government/publications/site-preparation-and-resistance-to-contaminates-and-moisture-approved-document-c", "summary": "Ground conditions, damp-proofing, contaminant resistance." },
+        { "code": "D",  "title": "Toxic substances", "url": "https://www.gov.uk/government/publications/toxic-substances-approved-document-d", "summary": "Cavity wall insulation toxicity (urea formaldehyde)." },
+        { "code": "E",  "title": "Resistance to the passage of sound", "url": "https://www.gov.uk/government/publications/resistance-to-sound-approved-document-e", "summary": "Airborne and impact sound insulation between dwellings." },
+        { "code": "F1", "title": "Ventilation — Vol 1: Dwellings", "url": "https://www.gov.uk/government/publications/ventilation-approved-document-f", "summary": "Background, purge and continuous ventilation for homes." },
+        { "code": "F2", "title": "Ventilation — Vol 2: Buildings other than dwellings", "url": "https://www.gov.uk/government/publications/ventilation-approved-document-f", "summary": "Mechanical and natural ventilation for non-dwellings." },
+        { "code": "G",  "title": "Sanitation, hot water safety and water efficiency", "url": "https://www.gov.uk/government/publications/sanitation-hot-water-safety-and-water-efficiency-approved-document-g", "summary": "Cold/hot water supply, scald protection, 110 L/person/day water target." },
+        { "code": "H",  "title": "Drainage and waste disposal", "url": "https://www.gov.uk/government/publications/drainage-and-waste-disposal-approved-document-h", "summary": "Foul/rain drainage, septic tanks, solid waste storage." },
+        { "code": "J",  "title": "Combustion appliances and fuel storage systems", "url": "https://www.gov.uk/government/publications/combustion-appliances-and-fuel-storage-systems-approved-document-j", "summary": "Flues, hearths, oil/LPG storage, CO alarms." },
+        { "code": "K",  "title": "Protection from falling, collision and impact", "url": "https://www.gov.uk/government/publications/protection-from-falling-collision-and-impact-approved-document-k", "summary": "Stairs, guarding, glazing in critical locations." },
+        { "code": "L1", "title": "Conservation of fuel and power — Vol 1: Dwellings", "url": "https://www.gov.uk/government/publications/conservation-of-fuel-and-power-approved-document-l", "summary": "Energy performance, fabric U-values, heating/hot water efficiency in homes." },
+        { "code": "L2", "title": "Conservation of fuel and power — Vol 2: Buildings other than dwellings", "url": "https://www.gov.uk/government/publications/conservation-of-fuel-and-power-approved-document-l", "summary": "Energy performance for non-dwellings." },
+        { "code": "M1", "title": "Access to and use of buildings — Vol 1: Dwellings", "url": "https://www.gov.uk/government/publications/access-to-and-use-of-buildings-approved-document-m", "summary": "M4(1) visitable, M4(2) accessible/adaptable, M4(3) wheelchair-user dwellings." },
+        { "code": "M2", "title": "Access to and use of buildings — Vol 2: Buildings other than dwellings", "url": "https://www.gov.uk/government/publications/access-to-and-use-of-buildings-approved-document-m", "summary": "Access, sanitary accommodation in non-dwellings." },
+        { "code": "O",  "title": "Overheating", "url": "https://www.gov.uk/government/publications/overheating-approved-document-o", "summary": "Limiting solar gains and removing excess heat in new residential." },
+        { "code": "P",  "title": "Electrical safety — dwellings", "url": "https://www.gov.uk/government/publications/electrical-safety-approved-document-p", "summary": "Design, installation, inspection and testing of fixed electrical work." },
+        { "code": "Q",  "title": "Security — dwellings", "url": "https://www.gov.uk/government/publications/security-in-dwellings-approved-document-q", "summary": "Easily accessible doors/windows must resist unauthorised access (PAS 24)." },
+        { "code": "R",  "title": "Physical infrastructure for high-speed electronic communications networks", "url": "https://www.gov.uk/government/publications/physical-infrastructure-for-high-speed-electronic-communications-networks-approved-document-r", "summary": "In-building physical infrastructure for ≥30 Mbit/s broadband." },
+        { "code": "S",  "title": "Infrastructure for the charging of electric vehicles", "url": "https://www.gov.uk/government/publications/infrastructure-for-the-charging-of-electric-vehicles-approved-document-s", "summary": "EV chargepoints / cable routes for new residential and non-residential." },
+        { "code": "T",  "title": "Toilet accommodation", "url": "https://www.gov.uk/government/publications/toilet-accommodation-approved-document-t", "summary": "Universal toilet provision in non-domestic buildings." },
+        { "code": "7",  "title": "Materials and workmanship", "url": "https://www.gov.uk/government/publications/materials-and-workmanship-approved-document-7", "summary": "Adequate materials and proper workmanship required by regulation 7." }
+      ]
+    },
+    "S92000003": {
+      "name": "Scotland",
+      "regulator": "Building (Scotland) Regulations 2004",
+      "authority": "Scottish Government — Building Standards Division (gov.scot)",
+      "indexUrl": "https://www.gov.scot/policies/building-standards/monitoring-improving-building-regulations/",
+      "licence": "Open Government Licence v3.0",
+      "documents": [
+        { "code": "TH-D",   "title": "Technical Handbook — Domestic (2024 edition)", "url": "https://www.gov.scot/publications/building-standards-technical-handbook-2024-domestic/", "summary": "Domestic buildings; sections 0–7 (General, Structure, Fire, Environment, Safety, Noise, Energy, Sustainability)." },
+        { "code": "TH-ND",  "title": "Technical Handbook — Non-domestic (2024 edition)", "url": "https://www.gov.scot/publications/building-standards-technical-handbook-2024-non-domestic/", "summary": "Non-domestic buildings; same sectional layout as domestic handbook." },
+        { "code": "BSC",    "title": "Building (Scotland) Regulations 2004 (as amended)", "url": "https://www.legislation.gov.uk/ssi/2004/406/contents", "summary": "Statutory regulations underpinning the technical handbooks." }
+      ]
+    },
+    "W92000004": {
+      "name": "Wales",
+      "regulator": "Building Regulations 2010 (Wales)",
+      "authority": "Welsh Government (gov.wales)",
+      "indexUrl": "https://www.gov.wales/building-regulations-guidance-approved-documents",
+      "licence": "Open Government Licence v3.0",
+      "documents": [
+        { "code": "AD-Wales", "title": "Approved Documents (Wales)", "url": "https://www.gov.wales/building-regulations-guidance-approved-documents", "summary": "Approved Documents A–T as applied in Wales, with Welsh-specific amendments where they differ from England (notably Parts L, F, P)." },
+        { "code": "L-Wales",  "title": "Approved Document L (Wales) — Conservation of fuel and power", "url": "https://www.gov.wales/building-regulations-guidance-approved-documents", "summary": "Welsh variant: tighter targets and slightly different fabric guidance than England." },
+        { "code": "P-Wales",  "title": "Approved Document P (Wales) — Electrical safety", "url": "https://www.gov.wales/building-regulations-guidance-approved-documents", "summary": "Welsh notification scheme differs from England." }
+      ]
+    },
+    "N92000002": {
+      "name": "Northern Ireland",
+      "regulator": "Building Regulations (Northern Ireland) 2012",
+      "authority": "Department of Finance NI (finance-ni.gov.uk)",
+      "indexUrl": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets",
+      "licence": "Open Government Licence v3.0",
+      "documents": [
+        { "code": "TB-B", "title": "Technical Booklet B — Materials and workmanship", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Suitability of materials, workmanship standards." },
+        { "code": "TB-C", "title": "Technical Booklet C — Preparation of site and resistance to moisture", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Site preparation, damp protection." },
+        { "code": "TB-D", "title": "Technical Booklet D — Structure", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Structural loading, stability." },
+        { "code": "TB-E", "title": "Technical Booklet E — Fire safety", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Means of escape, fire spread, structural fire protection." },
+        { "code": "TB-F1","title": "Technical Booklet F1 — Conservation of fuel and power (dwellings)", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Energy performance for new dwellings." },
+        { "code": "TB-F2","title": "Technical Booklet F2 — Conservation of fuel and power (non-dwellings)", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Energy performance for non-dwellings." },
+        { "code": "TB-G", "title": "Technical Booklet G — Resistance to the passage of sound", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Sound insulation provisions." },
+        { "code": "TB-G1","title": "Technical Booklet G1 — Sound (conversions)", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Acoustics in material change-of-use." },
+        { "code": "TB-H", "title": "Technical Booklet H — Stairs, ramps, guarding and protection from impact", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Stair geometry, guarding, impact glazing." },
+        { "code": "TB-J", "title": "Technical Booklet J — Solid waste in buildings", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Storage and access for refuse." },
+        { "code": "TB-K", "title": "Technical Booklet K — Ventilation", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Background and purge ventilation rates." },
+        { "code": "TB-L", "title": "Technical Booklet L — Combustion appliances and fuel storage", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Flues, hearths, oil/LPG storage." },
+        { "code": "TB-N", "title": "Technical Booklet N — Drainage", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Foul and surface water drainage." },
+        { "code": "TB-P", "title": "Technical Booklet P — Sanitary appliances, unvented hot water storage and reducing risk of scalding", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Sanitary fittings, unvented hot-water safety." },
+        { "code": "TB-R", "title": "Technical Booklet R — Access to and use of buildings", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Accessibility provisions." },
+        { "code": "TB-V", "title": "Technical Booklet V — Glazing", "url": "https://www.finance-ni.gov.uk/articles/building-regulations-technical-booklets", "summary": "Glazing in critical locations, safe breakage, manifestation." }
+      ]
+    }
+  }
+}

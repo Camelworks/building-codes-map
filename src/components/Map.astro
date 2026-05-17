@@ -1,0 +1,173 @@
+---
+// Renders the MapLibre map and wires up region selection + address search flyTo.
+// Loads /data/uk-nations.geojson + /data/uk-codes.json from public/.
+---
+
+<div id="bcm-map" class="absolute inset-0"></div>
+<div id="bcm-attrib-hint" class="pointer-events-none absolute bottom-2 left-2 text-[10px] text-slate-400">Tiles © OpenFreeMap · Boundaries © ONS / Crown · OGL v3.0</div>
+
+<script>
+  import maplibregl from 'maplibre-gl';
+
+  type CodeDoc = { code: string; title: string; url: string; summary: string };
+  type RegionData = {
+    name: string;
+    regulator: string;
+    authority: string;
+    indexUrl: string;
+    licence: string;
+    documents: CodeDoc[];
+  };
+
+  const UK_CENTER: [number, number] = [-3.5, 54.5];
+  const UK_ZOOM = 4.6;
+
+  const map = new maplibregl.Map({
+    container: 'bcm-map',
+    style: 'https://tiles.openfreemap.org/styles/positron',
+    center: UK_CENTER,
+    zoom: UK_ZOOM,
+    minZoom: 2,
+    maxZoom: 18,
+    attributionControl: { compact: true },
+    cooperativeGestures: false,
+  });
+
+  map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');
+  map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-left');
+
+  let codes: Record<string, RegionData> = {};
+  let hoveredId: string | number | null = null;
+  let selectedCode: string | null = null;
+  const searchMarker = new maplibregl.Marker({ color: '#0f766e' });
+
+  map.on('load', async () => {
+    const [geo, codesRes] = await Promise.all([
+      fetch('/data/uk-nations.geojson').then((r) => r.json()),
+      fetch('/data/uk-codes.json').then((r) => r.json()),
+    ]);
+    codes = codesRes.regions;
+
+    map.addSource('uk-nations', {
+      type: 'geojson',
+      data: geo,
+      promoteId: 'CTRY23CD',
+    });
+
+    map.addLayer({
+      id: 'uk-nations-fill',
+      type: 'fill',
+      source: 'uk-nations',
+      paint: {
+        'fill-color': [
+          'case',
+          ['boolean', ['feature-state', 'selected'], false], '#0f766e',
+          ['boolean', ['feature-state', 'hover'], false], '#5eead4',
+          '#14b8a6',
+        ],
+        'fill-opacity': [
+          'case',
+          ['boolean', ['feature-state', 'selected'], false], 0.35,
+          ['boolean', ['feature-state', 'hover'], false], 0.25,
+          0.12,
+        ],
+      },
+    });
+
+    map.addLayer({
+      id: 'uk-nations-line',
+      type: 'line',
+      source: 'uk-nations',
+      paint: {
+        'line-color': '#0f766e',
+        'line-width': [
+          'case',
+          ['boolean', ['feature-state', 'selected'], false], 2.2,
+          ['boolean', ['feature-state', 'hover'], false], 1.4,
+          0.8,
+        ],
+        'line-opacity': 0.85,
+      },
+    });
+
+    map.addLayer({
+      id: 'uk-nations-label',
+      type: 'symbol',
+      source: 'uk-nations',
+      layout: {
+        'text-field': ['get', 'CTRY23NM'],
+        'text-font': ['Noto Sans Bold'],
+        'text-size': 12,
+        'text-letter-spacing': 0.06,
+        'text-transform': 'uppercase',
+      },
+      paint: {
+        'text-color': '#134e4a',
+        'text-halo-color': '#ffffff',
+        'text-halo-width': 1.4,
+      },
+    });
+
+    map.on('mousemove', 'uk-nations-fill', (e) => {
+      map.getCanvas().style.cursor = 'pointer';
+      const f = e.features?.[0];
+      if (!f) return;
+      if (hoveredId !== null && hoveredId !== f.id) {
+        map.setFeatureState({ source: 'uk-nations', id: hoveredId }, { hover: false });
+      }
+      hoveredId = f.id ?? null;
+      if (hoveredId !== null) {
+        map.setFeatureState({ source: 'uk-nations', id: hoveredId }, { hover: true });
+      }
+    });
+
+    map.on('mouseleave', 'uk-nations-fill', () => {
+      map.getCanvas().style.cursor = '';
+      if (hoveredId !== null) {
+        map.setFeatureState({ source: 'uk-nations', id: hoveredId }, { hover: false });
+        hoveredId = null;
+      }
+    });
+
+    map.on('click', 'uk-nations-fill', (e) => {
+      const f = e.features?.[0];
+      if (!f) return;
+      const code = f.properties?.CTRY23CD as string;
+      selectRegion(code);
+    });
+  });
+
+  function selectRegion(code: string) {
+    const data = codes[code];
+    if (!data) return;
+    if (selectedCode && selectedCode !== code) {
+      map.setFeatureState({ source: 'uk-nations', id: selectedCode }, { selected: false });
+    }
+    selectedCode = code;
+    map.setFeatureState({ source: 'uk-nations', id: code }, { selected: true });
+    window.dispatchEvent(new CustomEvent('bcm:region', { detail: { code, ...data } }));
+  }
+
+  window.addEventListener('bcm:locate', (e: Event) => {
+    const d = (e as CustomEvent).detail as { lat: number; lon: number; boundingBox?: [number, number, number, number]; displayName: string };
+    searchMarker.setLngLat([d.lon, d.lat]).addTo(map);
+    if (d.boundingBox) {
+      // boundingBox = [minLat, maxLat, minLon, maxLon]
+      const [s, n, w, ePos] = d.boundingBox;
+      map.fitBounds([[w, s], [ePos, n]], { padding: 80, maxZoom: 14, duration: 900 });
+    } else {
+      map.flyTo({ center: [d.lon, d.lat], zoom: 13, duration: 900 });
+    }
+    // Best-effort: find which UK nation contains the result and select it.
+    setTimeout(() => {
+      const pt = map.project([d.lon, d.lat]);
+      const hits = map.queryRenderedFeatures(pt, { layers: ['uk-nations-fill'] });
+      const code = hits[0]?.properties?.CTRY23CD as string | undefined;
+      if (code) selectRegion(code);
+    }, 950);
+  });
+</script>
+
+<style>
+  #bcm-map { background: #eef2f6; }
+</style>
